@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #dcd7c9;
+  --foreground: #2c3639;
+  --muted: #596365;
+  --accent: #a27b5c;
+  --line: #cbc5b7;
+  --lilac: #74677f;
+  --peach: #ad7656;
+  --mint: #59786c;
 }
 
 @theme inline {
@@ -12,15 +18,205 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+a { color: inherit; text-decoration: none; }
+button, input, textarea { font: inherit; }
+
+.page-shell { width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
+.topbar { min-height: 88px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+.brand { font-family: Georgia, serif; font-size: 28px; letter-spacing: -1.5px; font-weight: 700; color: #965b68; }
+.brand span { color: var(--lilac); }
+.topbar-note, .muted { color: var(--muted); font-size: 13px; }
+.hero { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; padding: 58px 34px 52px; margin: 28px 0 22px; border-left: 4px solid #ad7656; background: #e9e0d8; }
+.eyebrow { color: #946477; font-size: 10px; font-weight: 700; letter-spacing: 2px; margin: 0 0 19px; }
+
+h1, h2, h3, p { margin-top: 0; }
+h1 { font-family: Georgia, serif; font-size: clamp(42px, 6vw, 68px); line-height: 1.05; letter-spacing: -2px; font-weight: 400; margin: 0; }
+h1 em { color: #a9657f; font-style: normal; }
+
+.hero-copy, .form-intro { color: var(--muted); line-height: 1.7; max-width: 410px; margin: 18px 0 0; }
+.button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; border: 0; border-radius: 5px; padding: 0 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: transform .2s, background .2s, box-shadow .2s; }
+.button:hover { transform: translateY(-1px); box-shadow: 0 4px 10px #40323d1a; }
+.button:focus-visible, .text-action:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid #ad8798; outline-offset: 3px; }
+.button:active { transform: translateY(0); }
+.button-primary { color: white; background: #554653; }
+.button-primary:hover { background: #443642; }
+
+.section-heading { display: flex; align-items: flex-end; justify-content: space-between; padding-bottom: 23px; border-bottom: 1px solid var(--line); }
+.section-heading h2 { font: 400 30px Georgia, serif; letter-spacing: -.7px; margin: 0; color: #554176; }
+.section-heading h2 span { color: #a56c82; font: 12px var(--font-geist-sans), sans-serif; vertical-align: top; margin-left: 5px; }
+
+.wishlist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; padding-top: 28px; }
+.wishlist-card { min-height: 215px; padding: 23px; background: #faf8f4; border: 1px solid var(--line); border-top: 3px solid #b98191; border-radius: 4px; display: flex; flex-direction: column; transition: border-color .2s, transform .2s; }
+.wishlist-card:nth-child(4n + 2) { border-top-color: #9588a8; }
+.wishlist-card:nth-child(4n + 3) { border-top-color: #c29b77; }
+.wishlist-card:nth-child(4n) { border-top-color: #789d92; }
+.wishlist-card:hover { transform: translateY(-2px); }
+.card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 23px; }
+.card-number { color: #c49bb0; font: 12px Georgia, serif; }
+.card-dot { width: 10px; height: 10px; border-radius: 50%; background: #b98191; }
+.wishlist-card:nth-child(4n + 2) .card-dot { background: #9588a8; }
+.wishlist-card:nth-child(4n + 3) .card-dot { background: #c29b77; }
+.wishlist-card:nth-child(4n) .card-dot { background: #789d92; }
+.wishlist-card h3 { font: 400 22px Georgia, serif; margin-bottom: 9px; overflow-wrap: anywhere; color: #3c2b4a; }
+.card-description { color: var(--muted); font-size: 13px; line-height: 1.55; margin-bottom: 14px; white-space: pre-wrap; }
+.item-link { color: #946477; font-size: 12px; margin: 0 0 16px; }
+.card-actions { display: flex; gap: 18px; align-items: center; margin-top: auto; padding-top: 17px; border-top: 1px solid #e9e1e2; }
+.text-action { padding: 0; border: 0; background: none; color: #8c5b78; font-size: 12px; cursor: pointer; transition: color .2s; }
+.text-action:hover { color: #965a72; }
+.text-action:disabled { opacity: .5; cursor: wait; }
+.danger { color: #a55f65; }
+
+.empty-state { text-align: center; padding: 38px 20px 42px; margin-top: 24px; border: 1px solid var(--line); border-radius: 4px; background: #eae3dc; }
+.empty-icon { display: inline-grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: #f5eee6; color: #965b68; font-size: 20px; margin: 0 auto; }
+.empty-state h3 { font: 400 26px Georgia, serif; margin: 16px 0 8px; color: #554653; }
+.empty-state p { color: var(--muted); font-size: 13px; margin-bottom: 22px; }
+
+.footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; padding: 24px 0; margin-top: 72px; display: flex; justify-content: space-between; }
+.footer span { color: #a56c82; }
+
+@media (max-width: 680px) {
+  .page-shell { width: min(100% - 36px, 520px); }
+  .topbar { min-height: 70px; }
+  .topbar-note { max-width: 160px; text-align: right; font-size: 11px; }
+  .hero { align-items: flex-start; flex-direction: column; padding: 38px 22px 32px; gap: 24px; }
+  .section-heading { align-items: flex-start; flex-direction: column; gap: 12px; }
+  .wishlist-grid { grid-template-columns: 1fr; gap: 12px; }
+  .footer { margin-top: 48px; line-height: 1.6; gap: 12px; }
+}
+
+/* Halaman utama dan form: warna tanah yang dipakai juga pada contoh proyek. */
+.dashboard-page { min-height: 100vh; padding: 40px 24px; background: #dcd7c9; }
+.dashboard-container { width: min(1180px, 100%); margin: 0 auto; }
+.dashboard-header { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 32px; }
+.dashboard-label { margin-bottom: 9px; color: #a27b5c; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; }
+.dashboard-header h1, .form-container h1 { margin: 0; color: #2c3639; font: 700 clamp(32px, 5vw, 44px) var(--font-geist-sans), Arial, sans-serif; letter-spacing: -1px; }
+.dashboard-subtitle { margin: 8px 0 0; color: #3f4e4f; }
+.add-link { display: inline-block; border-radius: 8px; padding: 13px 20px; background: #3f4e4f; color: white; font-weight: 600; transition: background .2s, transform .2s; }
+.add-link:hover { background: #2c3639; transform: translateY(-1px); }
+.wishlist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); gap: 20px; }
+.wishlist-card { min-height: 220px; padding: 22px; border: 0; border-radius: 14px; background: #fff; box-shadow: 0 4px 12px #2c363914; }
+.wishlist-card:nth-child(n) { border-top: 0; }
+.wishlist-card:nth-child(4n + 1) { border-left: 5px solid #a27b5c; }
+.wishlist-card:nth-child(4n + 2) { border-left: 5px solid #758b81; }
+.wishlist-card:nth-child(4n + 3) { border-left: 5px solid #bd8b78; }
+.wishlist-card:nth-child(4n) { border-left: 5px solid #8e8498; }
+.wishlist-card:hover { transform: translateY(-2px); box-shadow: 0 7px 16px #2c36391f; }
+.card-date { color: #7c8583; font-size: 12px; }
+.wishlist-card h2 { margin: 0 0 10px; color: #2c3639; font-size: 21px; }
+.wishlist-card > p:not(.card-date) { color: #3f4e4f; line-height: 1.55; }
+.wishlist-image { display: block; width: calc(100% + 44px); height: 210px; margin: -22px -22px 18px; border-radius: 14px 14px 0 0; object-fit: cover; background: #dcd7c9; }
+.edit-image-preview { display: block; width: 100%; max-height: 300px; border-radius: 8px; object-fit: contain; background: #dcd7c9; }
+.product-link { display: inline-block; margin: 4px 0 16px; color: #8b674b; font-size: 14px; font-weight: 600; }
+.product-link:hover, .edit-link:hover { color: #3f4e4f; text-decoration: underline; }
+.card-buttons { display: flex; align-items: center; gap: 9px; margin-top: auto; padding-top: 16px; }
+.card-buttons form { margin: 0; }
+.edit-link, .delete-button { display: inline-block; border: 0; border-radius: 7px; padding: 9px 14px; color: #fff; background: #a27b5c; font-size: 13px; font-weight: 600; cursor: pointer; transition: background .2s, transform .2s; }
+.edit-link:hover { color: #fff; background: #8d694e; text-decoration: none; }
+.delete-button { background: #3f4e4f; }
+.delete-button:hover { background: #2c3639; }
+.edit-link:active, .delete-button:active { transform: scale(.97); }
+.edit-link:focus-visible, .delete-button:focus-visible, .add-link:focus-visible { outline: 3px solid #a27b5c; outline-offset: 3px; }
+.delete-button:disabled { opacity: .6; cursor: wait; }
+.no-wishlist { padding: 44px 24px; border-radius: 14px; background: #fff; text-align: center; box-shadow: 0 4px 12px #2c363914; }
+.no-wishlist h2 { margin-bottom: 8px; color: #2c3639; }
+.no-wishlist p { color: #3f4e4f; }
+.no-wishlist a { display: inline-block; margin-top: 8px; color: #8b674b; font-weight: 700; }
+.no-wishlist a:hover { color: #3f4e4f; text-decoration: underline; }
+.form-page { min-height: 100vh; padding: 48px 22px; background: #dcd7c9; }
+.form-container { width: min(620px, 100%); margin: 0 auto; }
+.back-link { display: inline-block; margin: 0 0 28px; color: #3f4e4f; }
+.back-link:hover { color: #a27b5c; text-decoration: underline; }
+.form-container h1 { margin-bottom: 24px; }
+.simple-form { display: grid; gap: 12px; padding: 26px; border-radius: 14px; background: #fff; box-shadow: 0 4px 12px #2c363914; }
+.simple-form label { margin-top: 7px; color: #2c3639; font-size: 14px; font-weight: 600; }
+.simple-form input, .simple-form textarea { width: 100%; border: 1px solid #c8ceca; border-radius: 8px; padding: 12px 14px; color: #2c3639; background: #fff; outline: none; }
+.simple-form input:focus, .simple-form textarea:focus { border-color: #a27b5c; box-shadow: 0 0 0 3px #a27b5c26; }
+.simple-form textarea { resize: vertical; }
+.simple-form button { margin-top: 12px; border: 0; border-radius: 8px; padding: 13px 18px; color: #fff; background: #3f4e4f; font-weight: 600; cursor: pointer; transition: background .2s, transform .2s; }
+.simple-form button:hover { background: #2c3639; }
+.simple-form button:active { transform: scale(.98); }
+.simple-form button:disabled { opacity: .6; cursor: wait; }
+@media (max-width: 600px) {
+  .dashboard-page { padding: 28px 18px; }
+  .dashboard-header { align-items: flex-start; flex-direction: column; }
+  .form-page { padding: 32px 18px; }
+  .simple-form { padding: 20px; }
+}
+
+/* Penyesuaian layar kecil supaya kartu dan form tidak melebar keluar layar. */
+@media (max-width: 760px) {
+  .dashboard-page {
+    padding: 28px 18px;
+  }
+
+  .dashboard-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .add-link {
+    width: 100%;
+    text-align: center;
+  }
+
+  .wishlist-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .wishlist-card {
+    min-width: 0;
+    padding: 18px;
+  }
+
+  .wishlist-image {
+    width: calc(100% + 36px);
+    height: clamp(170px, 55vw, 240px);
+    margin: -18px -18px 16px;
+  }
+
+  .card-buttons {
+    flex-wrap: wrap;
+  }
+
+  .form-page {
+    padding: 28px 16px;
+  }
+
+  .simple-form {
+    padding: 18px;
+  }
+
+  .simple-form input,
+  .simple-form textarea,
+  .simple-form button {
+    min-width: 0;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 380px) {
+  .dashboard-page {
+    padding: 22px 12px;
+  }
+
+  .form-page {
+    padding: 22px 12px;
+  }
+
+  .simple-form {
+    padding: 15px;
+  }
+
+  .edit-link,
+  .delete-button {
+    padding: 9px 11px;
+  }
 }
